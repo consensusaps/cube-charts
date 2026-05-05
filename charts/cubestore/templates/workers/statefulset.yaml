@@ -60,7 +60,7 @@ spec:
           env:
             {{- include "cubestore.common-env" . | nindent 12 }}
             {{- $fullName := include "cubestore.fullname" . }}
-            {{- $headlessServiceName := printf "%s-%s" $fullName "headless" }}
+            {{- $headlessServiceName := printf "%s-%s.%s.svc.cluster.local" $fullName "headless" .Release.Namespace }}
             {{- $workerPort := .Values.workers.port | int }}
             - name: MY_POD_NAME
               valueFrom:
