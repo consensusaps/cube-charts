@@ -44,6 +44,10 @@ spec:
         runAsUser: {{ .Values.securityContext.runAsUser }}
         fsGroup: {{ .Values.securityContext.fsGroup }}
       {{- end }}
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       containers:
         - name: cubestore
           {{- if .Values.image.tag }}
