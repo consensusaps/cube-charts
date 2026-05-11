@@ -13,7 +13,7 @@ metadata:
     {{- toYaml .Values.commonAnnotations | nindent 4 }}
   {{- end }}
 spec:
-  replicas: 1
+  replicas: {{ coalesce .Values.worker.replicaCount 1 }}
   selector:
     matchLabels:
       app.kubernetes.io/component: worker

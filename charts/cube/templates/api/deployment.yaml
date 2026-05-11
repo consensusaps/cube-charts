@@ -12,7 +12,7 @@ metadata:
     {{- toYaml .Values.commonAnnotations | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.api.apiCount }}
+  replicas: {{ coalesce .Values.api.replicaCount .Values.api.apiCount 1 }}
   selector:
     matchLabels:
       app.kubernetes.io/component: api
