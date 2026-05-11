@@ -681,7 +681,12 @@ api:
     automountServiceAccountToken: true
     annotations: {}
 
-  apiCount: 1
+  ## Number of API pod replicas. Prefer `replicaCount`; `apiCount` is kept
+  ## as a deprecated alias. If both are set, `replicaCount` wins. Default
+  ## (when neither is set) is 1, supplied by the deployment template via
+  ## `coalesce`.
+  ## replicaCount: 2
+  apiCount: 1  # DEPRECATED — use replicaCount
 
   ## Priority class name for the API pods
   ##
@@ -776,6 +781,11 @@ worker:
     name: ""
     automountServiceAccountToken: true
     annotations: {}
+
+  ## Number of worker pod replicas. Previously hardcoded to 1; now
+  ## configurable. Default (when unset) is 1, supplied by the deployment
+  ## template via `coalesce`. A HorizontalPodAutoscaler can override.
+  ## replicaCount: 2
 
   ## Priority class name for the worker pods
   ##

@@ -2,6 +2,15 @@
 
 The release numbering uses [semantic versioning](http://semver.org).
 
+## 3.4.0
+
+- Add `api.replicaCount` (replaces `api.apiCount`, which is kept as a
+  deprecated alias for backwards compatibility — `replicaCount` wins if
+  both are set).
+- Add `worker.replicaCount`. Previously the worker Deployment hardcoded
+  `replicas: 1`, ignoring all values overrides; now configurable. A
+  HorizontalPodAutoscaler can still take over scaling at runtime.
+
 ## 3.2.0
 
 - add scheduledRefreshQueriesPerAppId to replace scheduledRefreshConcurrency
