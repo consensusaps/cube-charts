@@ -57,6 +57,18 @@ securityContext:
   # fsGroup: 1001
   # runAsUser: 1001
 
+## Container Security Context
+## Applied verbatim to the `cube` container in both the api and worker
+## Deployments. Leave empty ({}) to omit. Example hardening:
+##   containerSecurityContext:
+##     allowPrivilegeEscalation: false
+##     readOnlyRootFilesystem: true
+##     capabilities:
+##       drop: ["ALL"]
+##     seccompProfile:
+##       type: RuntimeDefault
+containerSecurityContext: {}
+
 
 config:
   ## The port for a Cube deployment to listen to API connections on
