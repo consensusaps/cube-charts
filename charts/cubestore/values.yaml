@@ -41,6 +41,10 @@ securityContext:
   enabled: false
   #fsGroup:
   #runAsUser:
+  ## fsGroupChangePolicy: set to "OnRootMismatch" to avoid recursively
+  ## re-chowning large data volumes on every pod restart (only chowns when
+  ## the top-level dir ownership doesn't already match fsGroup).
+  #fsGroupChangePolicy: OnRootMismatch
 
 config:
   ## The logging level for Cube Store.
