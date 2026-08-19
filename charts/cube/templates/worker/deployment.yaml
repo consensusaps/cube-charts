@@ -34,6 +34,9 @@ spec:
       {{- if .Values.worker.priorityClassName }}
       priorityClassName: {{ .Values.worker.priorityClassName }}
       {{- end }}
+      {{- if .Values.worker.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.worker.terminationGracePeriodSeconds }}
+      {{- end }}
       {{- if .Values.securityContext.enabled }}
       securityContext:
         runAsUser: {{ .Values.securityContext.runAsUser }}
@@ -120,6 +123,10 @@ spec:
           {{- else if .Values.worker.customReadinessProbe }}
           readinessProbe:
             {{- toYaml .Values.worker.customReadinessProbe | nindent 12 }}
+          {{- end }}
+          {{- with .Values.worker.lifecycle }}
+          lifecycle:
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.worker.resources }}
           resources:

@@ -527,6 +527,8 @@ cubestore:
 | `api.readinessProbe.failureThreshold`             | Success threshold for readinessProbe                                                                                | `3`     |
 | `api.customLivenessProbe`                         | Custom livenessProbe that overrides the default one                                                                 | `{}`    |
 | `api.customReadinessProbe`                        | Custom readinessProbe that overrides the default one                                                                | `{}`    |
+| `api.lifecycle` | Container lifecycle hooks (e.g. `preStop`), rendered verbatim | `{}` |
+| `api.terminationGracePeriodSeconds` | Grace period for a terminating pod, in seconds (Kubernetes default is 30) | `""` |
 | `api.extraEnvVars`                                | Extra environment variables to pass on to the pod. The value is evaluated as a template                             | `[]`    |
 | `api.extraEnvVarsFromConfigMap`                   | Name of a Config Map containing extra environment variables to pass on to the pod                                   |         |
 | `api.extraEnvVarsFromSecret`                      | Name of a Secret containing extra environment variables to pass on to the pod                                       |         |
@@ -557,6 +559,8 @@ cubestore:
 | `worker.readinessProbe.failureThreshold`             | Success threshold for readinessProbe                                                                                | `3`     |
 | `worker.customLivenessProbe`                         | Custom livenessProbe that overrides the default one                                                                 | `{}`    |
 | `worker.customReadinessProbe`                        | Custom readinessProbe that overrides the default one                                                                | `{}`    |
+| `worker.lifecycle` | Container lifecycle hooks (e.g. `preStop`), rendered verbatim | `{}` |
+| `worker.terminationGracePeriodSeconds` | Grace period for a terminating pod, in seconds (Kubernetes default is 30) | `""` |
 | `worker.extraEnvVars`                                | Extra environment variables to pass on to the pod. The value is evaluated as a template                             | `[]`    |
 | `worker.extraEnvVarsFromConfigMap`                   | Name of a Config Map containing extra environment variables to pass on to the pod                                   |         |
 | `worker.extraEnvVarsFromSecret`                      | Name of a Secret containing extra environment variables to pass on to the pod                                       |         |

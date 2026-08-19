@@ -33,6 +33,9 @@ spec:
       {{- if .Values.api.priorityClassName }}
       priorityClassName: {{ .Values.api.priorityClassName }}
       {{- end }}
+      {{- if .Values.api.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.api.terminationGracePeriodSeconds }}
+      {{- end }}
       {{- if .Values.securityContext.enabled }}
       securityContext:
         runAsUser: {{ .Values.securityContext.runAsUser }}
@@ -122,6 +125,10 @@ spec:
           {{- else if .Values.api.customReadinessProbe }}
           readinessProbe:
             {{- toYaml .Values.api.customReadinessProbe | nindent 12 }}
+          {{- end }}
+          {{- with .Values.api.lifecycle }}
+          lifecycle:
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.api.resources }}
           resources:
