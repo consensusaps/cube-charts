@@ -22,9 +22,28 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4
 
+      # packages_with_index puts the .tgz into the publishing branch instead of
+      # attaching it to a GitHub release. That is not a style choice: with release
+      # assets this workflow is broken outright. chart-releaser creates the release
+      # first and uploads the asset second, and GitHub's immutable releases reject the
+      # second step —
+      #   422 Cannot upload assets to an immutable release
+      # — which is how the 2026-08-19 run failed, leaving an asset-less cube-3.6.0
+      # release marked Latest. Publishing into gh-pages sidesteps release assets
+      # entirely.
+      #
+      # It also fixes the thing that had gone unnoticed for months: the served index
+      # at https://consensusaps.github.io/cube-charts topped out at cube 3.3.1, so
+      # `helm pull --repo ...` could not fetch 3.4.0, 3.5.0 or 3.6.0 and every
+      # consumer was quietly vendoring `helm package` output instead.
+      #
+      # skip_existing lets a re-run pass over versions that already have a release
+      # (including that asset-less cube-3.6.0) rather than aborting the whole run.
       - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
+        uses: helm/chart-releaser-action@v1.7.0
         with:
           charts_dir: charts
+          packages_with_index: true
+          skip_existing: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
