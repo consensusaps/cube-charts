@@ -757,6 +757,16 @@ api:
   ##
   customReadinessProbe: {}
 
+  ## Container lifecycle hooks (e.g. a preStop sleep so the ingress stops routing
+  ## before the process goes away). Rendered verbatim into the container spec.
+  ##
+  lifecycle: {}
+
+  ## Grace period for a terminating pod, in seconds. Kubernetes defaults to 30;
+  ## set this higher when a preStop hook plus in-flight requests need longer.
+  ##
+  terminationGracePeriodSeconds: ""
+
   ## Tolerations for pod assignment
   ##
   tolerations: {}
@@ -855,6 +865,16 @@ worker:
   ## Custom readinessProbe that overrides the default one
   ##
   customReadinessProbe: {}
+
+  ## Container lifecycle hooks (e.g. a preStop sleep so the ingress stops routing
+  ## before the process goes away). Rendered verbatim into the container spec.
+  ##
+  lifecycle: {}
+
+  ## Grace period for a terminating pod, in seconds. Kubernetes defaults to 30;
+  ## set this higher when a preStop hook plus in-flight requests need longer.
+  ##
+  terminationGracePeriodSeconds: ""
 
   ## Tolerations for pod assignment
   ##
