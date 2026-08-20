@@ -757,6 +757,14 @@ api:
   ##
   customReadinessProbe: {}
 
+  ## Deployment rollout strategy, rendered verbatim into `spec.strategy`. Empty
+  ## means the Kubernetes default (RollingUpdate, maxSurge 25% / maxUnavailable
+  ## 25%). Set maxSurge: 0 when the namespace quota cannot fit an extra pod
+  ## during a rollout — with a surge the new ReplicaSet just never schedules and
+  ## the old pods keep serving, which looks like a successful deploy.
+  ##
+  updateStrategy: {}
+
   ## Container lifecycle hooks (e.g. a preStop sleep so the ingress stops routing
   ## before the process goes away). Rendered verbatim into the container spec.
   ##
@@ -865,6 +873,14 @@ worker:
   ## Custom readinessProbe that overrides the default one
   ##
   customReadinessProbe: {}
+
+  ## Deployment rollout strategy, rendered verbatim into `spec.strategy`. Empty
+  ## means the Kubernetes default (RollingUpdate, maxSurge 25% / maxUnavailable
+  ## 25%). Set maxSurge: 0 when the namespace quota cannot fit an extra pod
+  ## during a rollout — with a surge the new ReplicaSet just never schedules and
+  ## the old pods keep serving, which looks like a successful deploy.
+  ##
+  updateStrategy: {}
 
   ## Container lifecycle hooks (e.g. a preStop sleep so the ingress stops routing
   ## before the process goes away). Rendered verbatim into the container spec.

@@ -13,6 +13,10 @@ metadata:
   {{- end }}
 spec:
   replicas: {{ coalesce .Values.api.replicaCount .Values.api.apiCount 1 }}
+  {{- with .Values.api.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/component: api
