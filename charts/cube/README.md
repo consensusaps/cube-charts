@@ -527,6 +527,7 @@ cubestore:
 | `api.readinessProbe.failureThreshold`             | Success threshold for readinessProbe                                                                                | `3`     |
 | `api.customLivenessProbe`                         | Custom livenessProbe that overrides the default one                                                                 | `{}`    |
 | `api.customReadinessProbe`                        | Custom readinessProbe that overrides the default one                                                                | `{}`    |
+| `api.updateStrategy` | Deployment rollout strategy, rendered verbatim into `spec.strategy`. Empty means the Kubernetes default (maxSurge/maxUnavailable 25%) | `{}` |
 | `api.lifecycle` | Container lifecycle hooks (e.g. `preStop`), rendered verbatim | `{}` |
 | `api.terminationGracePeriodSeconds` | Grace period for a terminating pod, in seconds (Kubernetes default is 30) | `""` |
 | `api.extraEnvVars`                                | Extra environment variables to pass on to the pod. The value is evaluated as a template                             | `[]`    |
@@ -559,6 +560,7 @@ cubestore:
 | `worker.readinessProbe.failureThreshold`             | Success threshold for readinessProbe                                                                                | `3`     |
 | `worker.customLivenessProbe`                         | Custom livenessProbe that overrides the default one                                                                 | `{}`    |
 | `worker.customReadinessProbe`                        | Custom readinessProbe that overrides the default one                                                                | `{}`    |
+| `worker.updateStrategy` | Deployment rollout strategy, rendered verbatim into `spec.strategy`. Empty means the Kubernetes default (maxSurge/maxUnavailable 25%) | `{}` |
 | `worker.lifecycle` | Container lifecycle hooks (e.g. `preStop`), rendered verbatim | `{}` |
 | `worker.terminationGracePeriodSeconds` | Grace period for a terminating pod, in seconds (Kubernetes default is 30) | `""` |
 | `worker.extraEnvVars`                                | Extra environment variables to pass on to the pod. The value is evaluated as a template                             | `[]`    |

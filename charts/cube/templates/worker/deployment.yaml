@@ -14,6 +14,10 @@ metadata:
   {{- end }}
 spec:
   replicas: {{ coalesce .Values.worker.replicaCount 1 }}
+  {{- with .Values.worker.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       app.kubernetes.io/component: worker
