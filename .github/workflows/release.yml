@@ -51,6 +51,10 @@ jobs:
 
       - name: Install Helm
         uses: azure/setup-helm@v4
+        with:
+          # Pinned, not `latest`. The packaging below must be reproducible run to
+          # run, and an unpinned helm silently changes the packer under us.
+          version: v4.2.4
 
       - name: Package charts and stage anything new
         id: stage
@@ -65,11 +69,23 @@ jobs:
           for tgz in build/*.tgz; do
             name=$(basename "$tgz")
             if [[ -f "pages/$name" ]]; then
-              # helm package is byte-deterministic, so an existing file with different
-              # bytes means a published version was edited without a version bump.
-              # Refuse rather than silently rewriting history consumers already pulled.
-              if ! cmp -s "$tgz" "pages/$name"; then
+              # An already-published version whose CONTENT differs means a released
+              # chart was edited without a version bump. Refuse rather than silently
+              # rewriting history consumers already pulled.
+              #
+              # Compare extracted contents, NOT raw bytes. `helm package` is
+              # deterministic for a given helm build but NOT across builds — gzip
+              # framing differs — and some published versions here were packaged by
+              # hand from a developer machine before this workflow existed. A byte
+              # comparison flagged an identical cubestore-1.4.0 on this workflow's
+              # first real run (2026-08-20) and blocked an unrelated publish.
+              rm -rf /tmp/cmp-new /tmp/cmp-old
+              mkdir -p /tmp/cmp-new /tmp/cmp-old
+              tar xzf "$tgz" -C /tmp/cmp-new
+              tar xzf "pages/$name" -C /tmp/cmp-old
+              if ! diff -r /tmp/cmp-old /tmp/cmp-new >/dev/null; then
                 echo "::error::$name already published with different content — bump the chart version instead of editing a released one"
+                diff -r /tmp/cmp-old /tmp/cmp-new || true
                 exit 1
               fi
               echo "unchanged: $name"
